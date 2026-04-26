@@ -1,0 +1,14 @@
+# Pulse AI — Python Dependencies
+# Pinned versions for reproducibility
+
+# Claude API client
+anthropic==0.97.0
+
+# Environment variable management
+python-dotenv==1.2.2
+
+# Web UI for the dashboard
+gradio==5.49.1
+
+# Data manipulation
+pandas==2.2.3

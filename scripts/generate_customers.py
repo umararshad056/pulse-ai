@@ -1,0 +1,216 @@
+"""
+generate_customers.py — Phase 1 customer persona generator.
+
+Creates data/customers.json with 5 fintech wallet personas representing
+distinct behavioral fingerprints for the Pulse AI demo.
+
+Run: python scripts/generate_customers.py
+"""
+
+import json
+from pathlib import Path
+
+
+CUSTOMERS = {
+    "customers": [
+        {
+            "customer_id": "CUST_001",
+            "name": "Umar Arshad",
+            "age": 34,
+            "city": "Dubai",
+            "country": "UAE",
+            "occupation": "Fintech Professional",
+            "segment": "power_user",
+            "risk_tier": "low",
+            "engagement_tier": "very_high",
+            "monthly_salary_aed": 18000,
+            "salary_day": 25,
+            "wallet_balance_aed": 3450,
+            "preferred_channels": ["push", "in_app"],
+            "language": "en",
+            "behavioral_fingerprint": {
+                "salary_arrival_pattern": "monthly_25th_via_bank",
+                "post_salary_actions": [
+                    "tops_up_wallet_5000_aed",
+                    "pays_utility_bills_within_48h",
+                    "splits_dinner_p2p_weekly",
+                    "occasional_tabby_for_electronics"
+                ],
+                "top_categories": ["dining", "p2p_transfers", "bill_payments", "transport", "electronics"],
+                "top_merchants": ["Talabat", "Careem", "Apple Store", "Carrefour", "Noon"],
+                "average_monthly_outflow_aed": 14200,
+                "average_savings_rate_pct": 12,
+                "bnpl_usage": "occasional_low_value",
+                "bnpl_repayment_history": "always_on_time",
+                "p2p_frequency": "weekly",
+                "imt_activity": "none"
+            },
+            "demo_role": "Healthy power user — Claude should reward with premium tier suggestion, cashback boost, or savings goal increase"
+        },
+        {
+            "customer_id": "CUST_002",
+            "name": "Sara Hassan",
+            "age": 28,
+            "city": "Dubai",
+            "country": "UAE",
+            "occupation": "Marketing Manager",
+            "segment": "lifestyle_spender",
+            "risk_tier": "medium",
+            "engagement_tier": "high",
+            "monthly_salary_aed": 12000,
+            "salary_day": 1,
+            "wallet_balance_aed": 480,
+            "preferred_channels": ["push", "whatsapp"],
+            "language": "en",
+            "behavioral_fingerprint": {
+                "salary_arrival_pattern": "monthly_1st_via_bank",
+                "post_salary_actions": [
+                    "first_payment_goes_to_bnpl_installments",
+                    "weekly_wallet_topups",
+                    "frequent_fashion_and_beauty_merchants",
+                    "high_food_delivery_spend",
+                    "low_balance_by_day_18",
+                    "occasional_new_bnpl_application_late_month"
+                ],
+                "top_categories": ["bnpl_repayments", "fashion_retail", "beauty_retail", "food_delivery"],
+                "top_merchants": ["Sephora", "Zara", "Noon", "Tabby", "Tamara", "Talabat", "Deliveroo"],
+                "average_monthly_outflow_aed": 11800,
+                "average_savings_rate_pct": 2,
+                "bnpl_usage": "heavy_multiple_providers",
+                "bnpl_repayment_history": "mostly_on_time_occasional_partial",
+                "p2p_frequency": "low",
+                "imt_activity": "none"
+            },
+            "demo_role": "Tests responsible AI judgment — Claude should NOT push more BNPL; should suggest budgeting nudge or savings goal"
+        },
+        {
+            "customer_id": "CUST_003",
+            "name": "Ahmed Al-Mansouri",
+            "age": 42,
+            "city": "Sharjah",
+            "country": "UAE",
+            "occupation": "Logistics Manager",
+            "segment": "remittance_hub",
+            "risk_tier": "low",
+            "engagement_tier": "high",
+            "monthly_salary_aed": 25000,
+            "salary_day": 28,
+            "wallet_balance_aed": 6200,
+            "preferred_channels": ["push", "sms"],
+            "language": "en",
+            "behavioral_fingerprint": {
+                "salary_arrival_pattern": "monthly_28th_via_bank",
+                "post_salary_actions": [
+                    "imt_to_egypt_8000_aed_within_48h",
+                    "school_fee_payment_to_education_merchant",
+                    "multiple_utility_bill_payments",
+                    "bulk_grocery_shopping",
+                    "small_p2p_to_family_in_uae"
+                ],
+                "top_categories": ["imt_remittance", "bill_payments", "education_fees", "groceries"],
+                "top_merchants": ["Lulu Hypermarket", "DEWA", "Etisalat", "GEMS Education"],
+                "average_monthly_outflow_aed": 22500,
+                "average_savings_rate_pct": 8,
+                "bnpl_usage": "none",
+                "bnpl_repayment_history": "n/a",
+                "p2p_frequency": "moderate_family",
+                "imt_activity": "monthly_to_egypt"
+            },
+            "demo_role": "Best fit for IMT scheduling, multi-bill autopay bundle, FX rate alerts"
+        },
+        {
+            "customer_id": "CUST_004",
+            "name": "Layla Khoury",
+            "age": 26,
+            "city": "Abu Dhabi",
+            "country": "UAE",
+            "occupation": "Nurse",
+            "segment": "daily_commuter",
+            "risk_tier": "low",
+            "engagement_tier": "very_high",
+            "monthly_salary_aed": 9000,
+            "salary_day": 25,
+            "wallet_balance_aed": 1280,
+            "preferred_channels": ["push", "in_app"],
+            "language": "en",
+            "behavioral_fingerprint": {
+                "salary_arrival_pattern": "monthly_25th_via_bank",
+                "post_salary_actions": [
+                    "weekly_wallet_topup_2000_aed",
+                    "daily_transport_payments",
+                    "frequent_food_delivery",
+                    "monthly_micro_savings_200_aed",
+                    "occasional_pharmacy_and_fitness"
+                ],
+                "top_categories": ["transport", "food_delivery", "pharmacy", "micro_savings", "coffee_shops"],
+                "top_merchants": ["Careem", "Talabat", "Starbucks", "BinSina Pharmacy", "Fitness First"],
+                "average_monthly_outflow_aed": 8400,
+                "average_savings_rate_pct": 4,
+                "bnpl_usage": "none",
+                "bnpl_repayment_history": "n/a",
+                "p2p_frequency": "low",
+                "imt_activity": "none"
+            },
+            "demo_role": "Engagement gold — Claude should suggest transport bundle subscription, cashback boost, or savings goal increase"
+        },
+        {
+            "customer_id": "CUST_005",
+            "name": "Khalid Rashid",
+            "age": 38,
+            "city": "Dubai",
+            "country": "UAE",
+            "occupation": "Retail Supervisor",
+            "segment": "at_risk",
+            "risk_tier": "high",
+            "engagement_tier": "medium",
+            "monthly_salary_aed": 8500,
+            "salary_day": 25,
+            "wallet_balance_aed": 120,
+            "preferred_channels": ["sms", "push"],
+            "language": "en",
+            "behavioral_fingerprint": {
+                "salary_arrival_pattern": "monthly_25th_via_bank_irregular_bonuses",
+                "post_salary_actions": [
+                    "urgent_partial_bnpl_repayments_within_24h",
+                    "minimal_wallet_balance_most_of_month",
+                    "near_zero_balance_by_mid_month",
+                    "occasional_late_night_impulse_purchases",
+                    "frequent_failed_bill_payments",
+                    "applies_for_new_lending_late_month"
+                ],
+                "top_categories": ["bnpl_repayments", "basic_groceries", "late_night_retail"],
+                "top_merchants": ["Tabby", "Tamara", "Postpay", "Carrefour", "Noon"],
+                "average_monthly_outflow_aed": 8300,
+                "average_savings_rate_pct": 0,
+                "bnpl_usage": "heavy_three_providers_active",
+                "bnpl_repayment_history": "frequent_partial_payments_occasional_misses",
+                "p2p_frequency": "low",
+                "imt_activity": "none",
+                "risk_signals": [
+                    "multiple_active_bnpl_providers",
+                    "failed_bill_payments_last_30_days",
+                    "salary_to_repayment_ratio_above_60pct",
+                    "late_night_impulse_spending_pattern",
+                    "new_lending_request_with_existing_obligations"
+                ]
+            },
+            "demo_role": "CRITICAL responsible AI test — Claude must NOT recommend new BNPL or lending. Must route to financial wellness, repayment support, or budgeting nudge."
+        }
+    ]
+}
+
+
+def main():
+    output_path = Path("data/customers.json")
+    output_path.parent.mkdir(exist_ok=True)
+    
+    with open(output_path, "w") as f:
+        json.dump(CUSTOMERS, f, indent=2, ensure_ascii=False)
+    
+    print(f"✓ Wrote {len(CUSTOMERS['customers'])} customers to {output_path}")
+    for c in CUSTOMERS["customers"]:
+        print(f"  - {c['name']} ({c['segment']}, {c['risk_tier']} risk)")
+
+
+if __name__ == "__main__":
+    main()
